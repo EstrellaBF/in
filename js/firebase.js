@@ -11,8 +11,5 @@ window.addEventListener('load', function () {
     };
     firebase.initializeApp(config);
 
-    var verClientes = firebase.database().ref('ventas').child('cartopac');
-    verClientes.on('value', function (snapshot) {
-        console.log(snapshot.val());
-    });
+
 })

@@ -8,7 +8,8 @@
   <!-- css -->
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/main.css">
-  <!-- js -->  
+	<link rel="stylesheet" href="css/font-awesome.css">
+  <!-- js -->
   <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
@@ -16,22 +17,63 @@
 </head>
 
 <body>
-  <h1>Intranet</h1>
-  <input type="text" placeholder="escribe part-number">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+          aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Intranet Redsco</a>
+      </div>
 
-  <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalLogin">
-    Launch demo modal
-  </button>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="#">Cotizar <span class="sr-only">(current)</span></a></li>
+          <li><a href="#">Lista</a></li>
+          <li><a class="btn btn-default" href="#" role="button" id="log-out">Salir</a>
+          <li>
+            <!--Dropdown
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </li>
+              -->
+        </ul>
+        <!--form
+            <form class="navbar-form navbar-left">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search">
+              </div>
+              <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+            -->
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
 
   <!-- Modal -->
-  <div class="modal fade" data-keyboard="false" data-backdrop="static" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="modalLoginLabel">
+  <div class="modal fade" data-keyboard="false" data-backdrop="static" id="modalLogin" tabindex="-1" role="dialog"
+    aria-labelledby="modalLoginLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="modalLoginLabel">Ingresa tus datos para poder ingresar</h4>
         </div>
-        <div class="modal-body"> 
+        <div class="modal-body">
           <form id="login-form">
             <div class="form-group">
               <label for="email">Email address</label>
@@ -41,12 +83,31 @@
               <label for="password">Password</label>
               <input type="password" class="form-control" id="password" placeholder="Contraseña">
             </div>
-            <button id="test" type="button" class="btn btn-default">Ingresar</button>
+            <button id="submit-user" type="button" class="btn btn-default">Ingresar</button>
           </form>
         </div>
       </div>
     </div>
   </div>
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 .col-md-4">
+          <h2 id="current-quotation">Cotización </h2>
+          <button type="button" class="btn btn-info" id="add-quotation">Cotización nueva <i class="fa fa-plus "></i></button>
+          <div id="edit-quotation">
+            <label for=""></label>
+            <input type="number" placeholder="" id="quotation-last-number">
+            <button type="button" class="btn btn-info" id="save-quotation"><i class="fa fa-check-circle "></i></button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://unpkg.com/dayjs"></script>
   <script src="js/firebase.js"></script>
   <script src="js/intranet.js"></script>
 

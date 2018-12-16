@@ -1,28 +1,37 @@
 window.addEventListener('load', function () {
+	dayjs().format();
 	if (window.localStorage) {
-		//$('#modalLogin').modal({backdrop: 'static', keyboard: false});
-		/*
-		var user = {
-			'nombre': 'pollo',
-			'contra': '123456'
-		};
-		localStorage.setItem('user', JSON.stringify(user))
-		*/
 
 		var getUser = JSON.parse(localStorage.getItem('user'));
-		var loginForm = document.getElementById('login-form');
 
+		var submitUser = document.getElementById('submit-user');
+		var logOut = document.getElementById('log-out');
+		var editQuotation = document.getElementById('edit-quotation');
+		var CurrentQuotation = document.getElementById('current-quotation');
+		var addQuotation = document.getElementById('add-quotation');
+		var saveQuotation = document.getElementById('save-quotation');
+		var quotationLastNumber = document.getElementById('quotation-last-number');
+		
 		var email = '';
 		var password = '';
 
-		var inputEmail = document.getElementById('email');
-		var inputPassword = document.getElementById('password');
+		var userAuth = JSON.parse(localStorage.getItem('user'))
 
-		var test = document.getElementById('test');
-		test.addEventListener('click', sendLogin);
+		var ventas = firebase.database().ref('ventas');
+		var lastQuotation = firebase.database().ref('cotizacion');
+
+		if (userAuth === null) {
+			$("#modalLogin").modal("show");
+			submitUser.addEventListener('click', sendLogin);
+
+		} else {
+			$("#modalLogin").modal("hide");
+		}
 
 		function sendLogin() {
-
+			var inputEmail = document.getElementById('email');
+			var inputPassword = document.getElementById('password');
+			console.log(inputEmail)
 			email = inputEmail.value;
 			password = inputPassword.value;
 
@@ -32,10 +41,11 @@ window.addEventListener('load', function () {
 			firebase.auth().signInWithEmailAndPassword(email, password)
 				.then(function (firebaseUser) {
 					console.log(firebaseUser);
-					var user = {
+					let user = {
 						'email': email,
 						'password': password
 					};
+					inputEmail = '';
 					localStorage.setItem('user', JSON.stringify(user));
 					$("#modalLogin").modal("hide");
 				})
@@ -44,38 +54,45 @@ window.addEventListener('load', function () {
 				});
 		}
 
+		logOut.addEventListener('click', function () {
+			localStorage.removeItem('user');
+			window.open("http://redscoperu.com", '_self');
+		})
+
+		const day = dayjs()
+			.startOf('day')
+			.format('DD');
+		const month = dayjs()
+			.startOf('month')
+			.format('MM');
+		const year = dayjs().year();
+
+		//Mostar Cotización
+		editQuotation.style.display = "none";
+		lastQuotation.on('value', function (snapshot) {
+			getLastQuotation = snapshot.val();
+			CurrentQuotation.innerText = `Cotización ${snapshot.val().numero}`
+			var showAtEditQuotation = snapshot.val().numero.slice(0, 13);
+			editQuotation.firstElementChild.innerText = `${showAtEditQuotation}` 
+		});
 
 
-		/*
-		$("#modalLogin").modal("show");
-		loginForm.addEventListener('submit', sendLogin);
-		function sendLogin() {
-			var email = document.getElementById('email');
-			var password = document.getElementById('password');
-			var user = {
-				'correo': email.value,
-				'contra': password.value
-			};
-			console.log(user)
-			localStorage.setItem('user', JSON.stringify(user))
-			$("#modalLogin").modal("hide");
-		}
-		*/
 
+		//Añadir cotización 
+		addQuotation.addEventListener('click', function(){
+			editQuotation.style.display = "block";
+		})
 
-		/*
-				var email = "juan.palomino@redscoperu.com";
-				var password = "123456";
-				firebase.auth().signInWithEmailAndPassword(email, password)
-				try {
-					console.log(email);
-					console.log(password);
-				} catch (error) {
-					console.log(error.code);
-					console.log(error.message);
-				};
-				*/
-
+		//guardando cotización
+		saveQuotation.addEventListener('click', function(){
+			quotationLastNumber.value;
+			lastQuotation.set({
+				'numero': `N ${day}-${month}-${year}-${quotationLastNumber.value}`
+			})
+			alert('cotización guardada');
+			quotationLastNumber.value='';
+		})		
+		
 		/*
 		var miObjeto = {
 			'marcado': 'html5',
